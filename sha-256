@@ -1,0 +1,26 @@
+const { generateKeyPairSync, publicEncrypt, privateDecrypt } = require('crypto');
+
+// Генерация пары ключей (RSA)
+const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem'
+    },
+    privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem'
+    }
+});
+
+console.log('Public Key:', publicKey);
+console.log('Private Key:', privateKey);
+
+// Сообщение для шифрования
+const message = 'Zholdoshalieva Nazima'
+const encryptedData = publicEncrypt(publicKey, Buffer.from(message));
+console.log('Encrypted message:', encryptedData.toString('base64'));
+
+// Расшифровка сообщения
+const decryptedData = privateDecrypt(privateKey, encryptedData); // Здесь была ошибка
+console.log('Decrypted message:', decryptedData.toString());
